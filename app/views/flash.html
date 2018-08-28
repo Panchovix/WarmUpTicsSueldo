@@ -1,0 +1,32 @@
+<form action="/App/Sueldo" method="GET">
+	<center>
+  Sueldo en Pesos, de Bruto a Líquido:<input type="number" name="S">
+</form>
+<input type="submit">
+	</center>
+</form>
+<form action="/App/Sueldo2" method="GET">
+	<center>
+  Sueldo en Pesos, de Líquido a Bruto:<input type="number" name="L">
+</form>
+<input type="submit">
+	</center>
+</form>
+{{if .flash.success}}
+<div class="alert alert-success">
+	{{.flash.success}}
+</div>
+{{end}}
+
+{{if or .errors .flash.error}}
+<div class="alert alert-danger">
+	{{if .flash.error}}
+		{{.flash.error}}
+	{{end}}
+	<ul style="margin-top:10px;">
+		{{range .errors}}
+			<li>{{.}}</li>
+		{{end}}
+	</ul>
+</div>
+{{end}}

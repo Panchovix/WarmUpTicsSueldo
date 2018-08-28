@@ -1,0 +1,11 @@
+{{set . "title" "Sueldo page"}}
+{{template "header.html" .}}
+<header class="jumbotron" style="background-color:#FFFF00">
+  <h1>Su Sueldo imponible es: {{.sueldobrutoi}}</h1>
+  <h1>Su Costo por seguro de Cesantía es: {{.cesantia}}</h1>
+  <h1>Su Costo por AFP es: {{.afp}}</h1>
+  <h1>Su impuesto es: {{.impuesto}}</h1>
+  <h1>Su Sueldo líquido es: {{.sueldoliquido3}}</h1>
+</header>
+<a href="/">Back to form</a>
+{{template "footer.html" .}}
