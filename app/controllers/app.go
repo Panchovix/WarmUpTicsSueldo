@@ -8,7 +8,7 @@ type App struct {
 	*revel.Controller
 }
 
-func (C App) Sueldoutm (S float64) float64{
+func (C App) Sueldoutm (S float64) float64{ //sueldo en UTM
 	utm := 47729.0
 	var Sutm = S/utm
 	return Sutm
@@ -16,7 +16,7 @@ func (C App) Sueldoutm (S float64) float64{
 
 
 
-func (c App) FormulaSueldoLiquido(S float64) float64{
+func (c App) FormulaSueldoLiquido(S float64) float64{  // Formula para calcular el sueldo líquido dado el Bruto
 	sueldobrutoi := (S)*0.176
 	utm := 47729.0
 	sueldoliquidoi:= S- sueldobrutoi - c.Impuesto(c.Sueldoutm(S)) * utm
@@ -24,31 +24,31 @@ func (c App) FormulaSueldoLiquido(S float64) float64{
 	
 }
 	
-func (c App) Impuesto (SU float64) float64{
+func (c App) Impuesto (SU float64) float64{ // Impuesto asociado a la renta, dado el sueldo bruto
 	var imp float64
-	if SU > 0 && SU  < 13.5{
+	if SU > 0 && SU  <= 13.5{
 		imp = 0}
-	if SU > 13.5 && SU  <30{
+	if SU > 13.5 && SU  <=30{
 		imp = SU * 0.04 - 0.54}
-	if SU > 30 && SU  <50{
+	if SU > 30 && SU  <=50{
 		imp = SU * 0.08 - 1.74}
-	if SU > 50 && SU  <70{
+	if SU > 50 && SU  <=70{
 		imp = SU * 0.135 - 4.49}
-	if SU > 70 &&SU  <90{
+	if SU > 70 &&SU  <=90{
 		imp = SU * 0.23 - 11.14}
-	if SU > 90 &&SU  <120{
+	if SU > 90 &&SU  <=120{
 		imp = SU * 0.304 - 17.8}
 	if SU > 120 {
 		imp = SU * 0.35 - 23.32}
 	return imp
 }
 
-func (c App) Index() revel.Result {
+func (c App) Index() revel.Result { // Bienvenida de la página
 	greeting:="Calculadora de Sueldo Líquido y Bruto"
 	return c.Render(greeting)
 }
 
-func (c App) Sueldo(S float64) revel.Result {
+func (c App) Sueldo(S float64) revel.Result { // función asociada a devolver las variables al html del sueldo bruto al líquido
 		utm := 47729.0
 		sueldoliquido3:=c.FormulaSueldoLiquido(S)
 		impuesto:= c.Impuesto(c.Sueldoutm(S)) * utm
@@ -60,14 +60,14 @@ func (c App) Sueldo(S float64) revel.Result {
 		return c.Render(sueldoliquido3, sueldobrutoi, cesantia, salud, afp, sueldobrutoi2, impuesto)
 }
 
-func (c App) Sueldo2(L float64) revel.Result {
+func (c App) Sueldo2(L float64) revel.Result { //funciòn asociada a devolver las variables al html del sueldo líquido al bruto
 	utm := 47729.0
 	impuestoI := c.ImpuestoI(c.Sueldoutm(L)) * utm
 	sbruto:= (impuestoI + L) / 0.824
 	return c.Render (impuestoI, sbruto)
 	}
 
-func (c App) ImpuestoI (SUT float64) float64{
+func (c App) ImpuestoI (SUT float64) float64{ //funciòn asociada a calcular el Impuesto de la renta inverso dado el sueldo líquido
 	var impi float64
 	if SUT < 13.5{
 		impi = 0}
